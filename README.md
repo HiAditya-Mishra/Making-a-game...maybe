@@ -5,5 +5,5 @@
  One correct for each question and it increases your score.
 
 
- Future Changes: 
+ Possible Future Changes: 
  I want to add some characters to have some character being your quizmaster and make it more interactive.
