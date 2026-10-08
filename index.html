@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Deutsch Game- MAYBE</title>
+        <title>Deutsch Game - MAYBE</title>
         <link rel="stylesheet" href="style.css">
     </head>
-    
-    <body>
-        <div class="game">
-            <h1>Deutsch QUEST</h1>
-            <p id="score">SCORE: 0</p>
-            <div class="character">   
-            </div>
-            <p id="question">What does "Hallo" mean?</p>
 
-            <button onclick="answer('Hello')">Hello</button>
-            <button onclick="answer('Goodbye')">Goodbye!</button>
-            <button onclick="answer('Thanks')">Thanks</button>
+    <body>
+
+        <div class="game">
+
+            <h1>Deutsch QUEST</h1>
+
+            <p id="score">SCORE: 0</p>
+
+            <div class="character">
+            </div>
+
+            <p id="question">Question</p>
+
+            <button onclick="answer(this.innerText)"></button>
+            <button onclick="answer(this.innerText)"></button>
+            <button onclick="answer(this.innerText)"></button>
+
             <p id="result"></p>
+
         </div>
-        <script src ="game.js"></script>
+
+        <script src="game.js"></script>
+
     </body>
 </html>
