@@ -6,13 +6,23 @@
     </head>
 
     <body>
-
-        <div class="game">
+        <div class="start-screen" id="startScreen">
 
             <h1>Deutsch QUEST</h1>
+            <p>Choose a category:</p>
 
+            <button onclick="startGame('greetings')">Greetings</button>
+            <button onclick="startGame('numbers')">Numbers</button>
+            <button onclick="startGame('food')">Food</button>
+            <button onclick="startGame('verbs')">Verbs</button>
+            <button onclick="startGame('mixed')">Mixed</button>
+
+        </div>
+
+        <div class="game" id="gameScreen">
+            <h1>Deutsch QUEST</h1>
             <p id="score">SCORE: 0</p>
-
+            <p id="questionNumber"></p>
             <div class="character">
             </div>
 

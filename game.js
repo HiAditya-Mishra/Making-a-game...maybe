@@ -1,59 +1,183 @@
 let score = 0;
 let questionNumber = 0;
+let selectedQuestions = [];
 
-let questions = [
-    {
-        question: 'What does "Hallo" mean?',
-        answers: ["Hello", "Goodbye", "Thanks"],
-        correct: "Hello"
-    },
+let questions = {
+    greetings: [
+        {
+            question: 'What does "Hallo" mean?',
+            answers: ["Hello", "Goodbye", "Thanks"],
+            correct: "Hello"
+        },
+        {
+            question: 'What does "Danke" mean?',
+            answers: ["Please", "Thanks", "Sorry"],
+            correct: "Thanks"
+        },
+        {
+            question: 'What does "Tschuess" mean?',
+            answers: ["Hello", "Goodbye", "Thank you"],
+            correct: "Goodbye"
+        },
+        {
+            question: 'What does "Guten Morgen" mean?',
+            answers: ["Good night", "Good morning", "Good evening"],
+            correct: "Good morning"
+        },
+        {
+            question: 'What does "Guten Abend" mean?',
+            answers: ["Good evening", "Good morning", "Goodbye"],
+            correct: "Good evening"
+        }
+    ],
 
-    {
-        question: 'What does "Danke" mean?',
-        answers: ["Please", "Thanks", "Good morning"],
-        correct: "Thanks"
-    },
+    numbers: [
+        {
+            question: 'What does "eins" mean?',
+            answers: ["One", "Two", "Three"],
+            correct: "One"
+        },
+        {
+            question: 'What does "zwei" mean?',
+            answers: ["Three", "Two", "Five"],
+            correct: "Two"
+        },
+        {
+            question: 'What does "drei" mean?',
+            answers: ["Four", "Three", "Six"],
+            correct: "Three"
+        },
+        {
+            question: 'What does "fünf" mean?',
+            answers: ["Five", "Four", "Seven"],
+            correct: "Five"
+        },
+        {
+            question: 'What does "zehn" mean?',
+            answers: ["Eight", "Ten", "Nine"],
+            correct: "Ten"
+        }
+    ],
 
-    {
-        question: 'What does "Tschuess" mean?',
-        answers: ["Hello", "Goodbye", "Thank you"],
-        correct: "Goodbye"
-    },
+    food: [
+        {
+            question: 'What does "Apfel" mean?',
+            answers: ["Apple", "Bread", "Milk"],
+            correct: "Apple"
+        },
+        {
+            question: 'What does "Brot" mean?',
+            answers: ["Cheese", "Bread", "Water"],
+            correct: "Bread"
+        },
+        {
+            question: 'What does "Milch" mean?',
+            answers: ["Juice", "Milk", "Coffee"],
+            correct: "Milk"
+        },
+        {
+            question: 'What does "Käse" mean?',
+            answers: ["Cheese", "Apple", "Egg"],
+            correct: "Cheese"
+        },
+        {
+            question: 'What does "Wasser" mean?',
+            answers: ["Water", "Milk", "Tea"],
+            correct: "Water"
+        }
+    ],
 
-    {
-        question: 'Ich ____ Cola.',
-        answers: ["trinken", "trinke", "trinkst"],
-        correct: "trinke"
+    verbs: [
+        {
+            question: 'Ich ____ Cola.',
+            answers: ["trinken", "trinke", "trinkst"],
+            correct: "trinke"
+        },
+        {
+            question: 'Ich ____ Deutsch.',
+            answers: ["lerne", "lernst", "lernen"],
+            correct: "lerne"
+        },
+        {
+            question: 'Ich ____ Musik.',
+            answers: ["höre", "hörst", "hören"],
+            correct: "höre"
+        },
+        {
+            question: 'Du ____ Fußball.',
+            answers: ["spiele", "spielt", "spielst"],
+            correct: "spielst"
+        },
+        {
+            question: 'Wir ____ Deutsch.',
+            answers: ["sprechen", "spricht", "sprichst"],
+            correct: "sprechen"
+        }
+    ]
+};
+
+
+function startGame(category) {
+
+    score = 0;
+    questionNumber = 0;
+
+    if (category == "mixed") {
+
+        selectedQuestions = [];
+
+        selectedQuestions = selectedQuestions.concat(questions.greetings);
+        selectedQuestions = selectedQuestions.concat(questions.numbers);
+        selectedQuestions = selectedQuestions.concat(questions.food);
+        selectedQuestions = selectedQuestions.concat(questions.verbs);
+
+    } else {
+
+        selectedQuestions = questions[category];
+
     }
-];
+
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("gameScreen").style.display = "block";
+
+    document.getElementById("score").innerText = "SCORE: 0";
+
+    showQuestion();
+}
+
 
 function showQuestion() {
 
     document.getElementById("question").innerText =
-        questions[questionNumber].question;
+        selectedQuestions[questionNumber].question;
 
-    let buttons = document.querySelectorAll("button");
+    document.getElementById("questionNumber").innerText =
+        "Question " + (questionNumber + 1) + " / " + selectedQuestions.length;
 
-    buttons[0].innerText = questions[questionNumber].answers[0];
-    buttons[1].innerText = questions[questionNumber].answers[1];
-    buttons[2].innerText = questions[questionNumber].answers[2];
+    let buttons = document.querySelectorAll("#gameScreen button");
+
+    buttons[0].innerText = selectedQuestions[questionNumber].answers[0];
+    buttons[1].innerText = selectedQuestions[questionNumber].answers[1];
+    buttons[2].innerText = selectedQuestions[questionNumber].answers[2];
 
     buttons.forEach(function(button) {
         button.disabled = false;
+        button.style.display = "inline-block";
     });
 
     document.getElementById("result").innerText = "";
 }
 
+
 function answer(choice) {
 
-    let buttons = document.querySelectorAll("button");
+    let buttons = document.querySelectorAll("#gameScreen button");
 
     buttons.forEach(function(button) {
         button.disabled = true;
     });
 
-    if (choice == questions[questionNumber].correct) {
+    if (choice == selectedQuestions[questionNumber].correct) {
 
         score = score + 10;
 
@@ -65,11 +189,12 @@ function answer(choice) {
 
     }
 
-    document.getElementById("score").innerText = "SCORE: " + score;
+    document.getElementById("score").innerText =
+        "SCORE: " + score;
 
     questionNumber = questionNumber + 1;
 
-    if (questionNumber < questions.length) {
+    if (questionNumber < selectedQuestions.length) {
 
         setTimeout(showQuestion, 1000);
 
@@ -79,6 +204,8 @@ function answer(choice) {
 
             document.getElementById("question").innerText =
                 "You finished the game!";
+
+            document.getElementById("questionNumber").innerText = "";
 
             document.getElementById("result").innerText =
                 "Final Score: " + score;
@@ -90,5 +217,3 @@ function answer(choice) {
         }, 1000);
     }
 }
-
-showQuestion();

@@ -1,7 +1,50 @@
-body { background: lightblue; text-align: center; font-family: Arial; }
+body {
+    background: black;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+    margin: 0;
+}
 
-.game { background: white; width: 500px; margin: 50px auto; padding: 20px; }
+.start-screen {
+    width: 500px;
+    margin: 100px auto;
+    padding: 30px;
+    background: url("title-bg.jpg") center/cover;
+}
 
-.character { font-size: 60px; }
+.start-screen h1, .game h1 {
+    color: #ffcc00;
+}
 
-button { padding: 10px; margin: 5px; }
+button {
+    padding: 12px 20px;
+    margin: 5px;
+    background: #ffcc00;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #dd0000;
+    color: white;
+}
+
+.game {
+    display: none;
+    background: black;
+    width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 3px solid #ffcc00;
+}
+
+#score {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+#result {
+    font-weight: bold;
+}
