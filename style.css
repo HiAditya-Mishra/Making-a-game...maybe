@@ -1,0 +1,7 @@
+body { background: lightblue; text-align: center; font-family: Arial; }
+
+.game { background: white; width: 500px; margin: 50px auto; padding: 20px; }
+
+.character { font-size: 60px; }
+
+button { padding: 10px; margin: 5px; }
