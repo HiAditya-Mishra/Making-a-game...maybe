@@ -15,7 +15,7 @@ let questions = [
     },
 
     {
-        question: 'What does "Tschüss" mean?',
+        question: 'What does "Tschuess" mean?',
         answers: ["Hello", "Goodbye", "Thank you"],
         correct: "Goodbye"
     },
