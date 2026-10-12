@@ -18,16 +18,6 @@ let questions = {
             question: 'What does "Tschuess" mean?',
             answers: ["Hello", "Goodbye", "Thank you"],
             correct: "Goodbye"
-        },
-        {
-            question: 'What does "Guten Morgen" mean?',
-            answers: ["Good night", "Good morning", "Good evening"],
-            correct: "Good morning"
-        },
-        {
-            question: 'What does "Guten Abend" mean?',
-            answers: ["Good evening", "Good morning", "Goodbye"],
-            correct: "Good evening"
         }
     ],
 
@@ -46,16 +36,6 @@ let questions = {
             question: 'What does "drei" mean?',
             answers: ["Four", "Three", "Six"],
             correct: "Three"
-        },
-        {
-            question: 'What does "fünf" mean?',
-            answers: ["Five", "Four", "Seven"],
-            correct: "Five"
-        },
-        {
-            question: 'What does "zehn" mean?',
-            answers: ["Eight", "Ten", "Nine"],
-            correct: "Ten"
         }
     ],
 
@@ -69,21 +49,6 @@ let questions = {
             question: 'What does "Brot" mean?',
             answers: ["Cheese", "Bread", "Water"],
             correct: "Bread"
-        },
-        {
-            question: 'What does "Milch" mean?',
-            answers: ["Juice", "Milk", "Coffee"],
-            correct: "Milk"
-        },
-        {
-            question: 'What does "Käse" mean?',
-            answers: ["Cheese", "Apple", "Egg"],
-            correct: "Cheese"
-        },
-        {
-            question: 'What does "Wasser" mean?',
-            answers: ["Water", "Milk", "Tea"],
-            correct: "Water"
         }
     ],
 
@@ -97,46 +62,22 @@ let questions = {
             question: 'Ich ____ Deutsch.',
             answers: ["lerne", "lernst", "lernen"],
             correct: "lerne"
-        },
-        {
-            question: 'Ich ____ Musik.',
-            answers: ["höre", "hörst", "hören"],
-            correct: "höre"
-        },
-        {
-            question: 'Du ____ Fußball.',
-            answers: ["spiele", "spielt", "spielst"],
-            correct: "spielst"
-        },
-        {
-            question: 'Wir ____ Deutsch.',
-            answers: ["sprechen", "spricht", "sprichst"],
-            correct: "sprechen"
         }
     ]
 };
 
-
 function startGame(category) {
-
     score = 0;
     questionNumber = 0;
-
     if (category == "mixed") {
-
         selectedQuestions = [];
-
         selectedQuestions = selectedQuestions.concat(questions.greetings);
         selectedQuestions = selectedQuestions.concat(questions.numbers);
         selectedQuestions = selectedQuestions.concat(questions.food);
         selectedQuestions = selectedQuestions.concat(questions.verbs);
-
     } else {
-
         selectedQuestions = questions[category];
-
     }
-
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("gameScreen").style.display = "block";
 
@@ -145,75 +86,54 @@ function startGame(category) {
     showQuestion();
 }
 
-
 function showQuestion() {
+    let currentQ = selectedQuestions[questionNumber];
 
-    document.getElementById("question").innerText =
-        selectedQuestions[questionNumber].question;
-
-    document.getElementById("questionNumber").innerText =
+    document.getElementById("question").innerText = currentQ.question;
+    document.getElementById("questionNumber").innerText = 
         "Question " + (questionNumber + 1) + " / " + selectedQuestions.length;
 
-    let buttons = document.querySelectorAll("#gameScreen button");
-
-    buttons[0].innerText = selectedQuestions[questionNumber].answers[0];
-    buttons[1].innerText = selectedQuestions[questionNumber].answers[1];
-    buttons[2].innerText = selectedQuestions[questionNumber].answers[2];
-
-    buttons.forEach(function(button) {
-        button.disabled = false;
-        button.style.display = "inline-block";
+    let optionsContainer = document.getElementById("optionsContainer");
+    optionsContainer.innerHTML = "";
+    currentQ.answers.forEach(function(ans) {
+        let btn = document.createElement("button");
+        btn.innerText = ans;
+        // When clicked, pass the answer text into our answer function
+        btn.onclick = function() {
+            answer(ans);
+        };
+        optionsContainer.appendChild(btn);
     });
 
     document.getElementById("result").innerText = "";
 }
 
-
 function answer(choice) {
+    let currentQ = selectedQuestions[questionNumber];
+    let allButtons = document.querySelectorAll("#optionsContainer button");
 
-    let buttons = document.querySelectorAll("#gameScreen button");
-
-    buttons.forEach(function(button) {
+    allButtons.forEach(function(button) {
         button.disabled = true;
     });
 
-    if (choice == selectedQuestions[questionNumber].correct) {
-
+    if (choice == currentQ.correct) {
         score = score + 10;
-
         document.getElementById("result").innerText = "CORRECT!!!!";
-
     } else {
-
         document.getElementById("result").innerText = "Wrong!";
-
     }
 
-    document.getElementById("score").innerText =
-        "SCORE: " + score;
+    document.getElementById("score").innerText = "SCORE: " + score;
 
     questionNumber = questionNumber + 1;
-
     if (questionNumber < selectedQuestions.length) {
-
         setTimeout(showQuestion, 1000);
-
     } else {
-
         setTimeout(function() {
-
-            document.getElementById("question").innerText =
-                "You finished the game!";
-
+            document.getElementById("question").innerText = "You finished the game!";
             document.getElementById("questionNumber").innerText = "";
-
-            document.getElementById("result").innerText =
-                "Final Score: " + score;
-
-            buttons.forEach(function(button) {
-                button.style.display = "none";
-            });
-
+            document.getElementById("result").innerText = "Final Score: " + score;
+            document.getElementById("optionsContainer").innerHTML = "";
         }, 1000);
     }
 }
